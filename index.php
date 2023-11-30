@@ -138,7 +138,7 @@
         margin: auto;
     }
 </style>
--->
+
 
 
 
@@ -213,7 +213,7 @@
                         </label>
                     </div>
                    <div class="form-group">
-                    <button class="btn btn-lg btn-block button1" style="background-color:lightblue; value="Sign in" id="btn-student" name="btn-student">Sign in</button>
+                    <button class="btn btn-lg btn-block button1" style="background-color:lightblue;" value="Sign in" id="btn-student" name="btn-student">Sign in</button>
                     </div>
 
                     
@@ -226,7 +226,7 @@
     
     
   <!-- Register -->
-         <p>Don't have an account? <a href="regist.php">Create an account</a></p>
+         <p>Don't have an account? <a href="student/regist.php">Create an account</a></p>
 
      
 

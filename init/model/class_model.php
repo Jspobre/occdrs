@@ -354,4 +354,3 @@ public function regist_process($IDNumber, $first_name, $middle_name, $last_name,
 				}
 			}
 	}	
-?>

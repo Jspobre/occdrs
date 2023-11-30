@@ -90,24 +90,71 @@
 
 
                             <!-- Dropdown for Doc Types -->
-                            <div class="form-group row">
-                                <label class="col-12 col-sm-3 col-form-label text-sm-right">Document Name</label>
-                                <div class="col-12 col-sm-8 col-lg-6">
-                                    <select class="form-control" name="document_name" required>
-                                        <option value="">Select Document Type</option>
-                                        <option value="Transcript of Record">Transcript of Record</option>
-                                        <option value="Diploma">Diploma</option>
-                                        <option value="Course Description">Course Description</option>
+                    <!-- Dropdown for Doc Types -->
+                    <div class="container mt-5">
+        <form id="documentForm" method="post" action="insert_document.php">
+            <div class="form-group row">
+                <label class="col-12 col-sm-3 col-form-label text-sm-right">Document Name</label>
+                <div class="col-12 col-sm-8 col-lg-6">
+                    <select class="form-control" id="documentName" name="document_name" required>
+                        <option value="">Select Document Type</option>
+                        <option value="Transcript of Record">Transcript of Record</option>
+                        <option value="Diploma">Diploma</option>
+                        <option value="Course Description">Course Description</option>
                                         <option value="Honorable Dismissal">Honorable Dismissal</option>
                                         <option value="Certificate of Graduation">Certificate of Graduation</option>
                                         <option value="Certificate of Grades">Certificate of Grades</option>
                                         <option value="Certificate of Enrollment">Certificate of Enrollment</option>
                                         <option value="Certificate of Good Moral Character">Certificate of Good Moral Character</option>
                                         <option value="Temporary I.D.">Temporary I.D.</option>
-                                        <option value="Certified True Copy of Document">Certified True Copy of Document</option>
-                                    </select>
-                                </div>
-                            </div>
+                                        <option value="Certified True Copy of Document">Certified True Copy of Document</option>                   
+                        <!-- Other options... -->
+                    </select>
+                </div>
+            </div>
+            <!-- Hidden input field to store the selected document -->
+            <input type="hidden" id="selectedDocument" name="selected_document" value="">
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            // On change event for the dropdown
+            $('#documentName').change(function() {
+                // Get the selected value
+                var selectedDocument = $(this).val();
+                // Set the selected value to the hidden input field
+                $('#selectedDocument').val(selectedDocument);
+            });
+
+            // Form submission
+            $('#documentForm').submit(function(e) {
+                e.preventDefault(); // Prevent the default form submission
+                var selectedDocument = $('#selectedDocument').val();
+                // You can perform further validation here if needed
+                if (selectedDocument !== '') {
+                    // Submit the form using AJAX or perform any necessary action
+                    // For example:
+                    $.ajax({
+                        type: 'POST',
+                        url: $(this).attr('action'),
+                        data: $(this).serialize(),
+                        success: function(response) {
+                            // Handle success response
+                            console.log('Document submitted successfully');
+                        },
+                        error: function(xhr, status, error) {
+                            // Handle error response
+                            console.error('Error:', error);
+                        }
+                    });
+                } else {
+                    alert('Please select a document type');
+                }
+            });
+        });
+    </script>
                             
                              <div class="form-group row">
                                 <label class="col-12 col-sm-3 col-form-label text-sm-right">No. of Copies</label>
