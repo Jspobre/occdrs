@@ -90,71 +90,24 @@
 
 
                             <!-- Dropdown for Doc Types -->
-                    <!-- Dropdown for Doc Types -->
-                    <div class="container mt-5">
-        <form id="documentForm" method="post" action="insert_document.php">
-            <div class="form-group row">
-                <label class="col-12 col-sm-3 col-form-label text-sm-right">Document Name</label>
-                <div class="col-12 col-sm-8 col-lg-6">
-                    <select class="form-control" id="documentName" name="document_name" required>
-                        <option value="">Select Document Type</option>
-                        <option value="Transcript of Record">Transcript of Record</option>
-                        <option value="Diploma">Diploma</option>
-                        <option value="Course Description">Course Description</option>
+                            <div class="form-group row">
+                                <label class="col-12 col-sm-3 col-form-label text-sm-right">Document Name</label>
+                                <div class="col-12 col-sm-8 col-lg-6">
+                                    <select class="form-control" name="document_name" required>
+                                        <option value="">Select Document Type</option>
+                                        <option value="Transcript of Record">Transcript of Record</option>
+                                        <option value="Diploma">Diploma</option>
+                                        <option value="Course Description">Course Description</option>
                                         <option value="Honorable Dismissal">Honorable Dismissal</option>
                                         <option value="Certificate of Graduation">Certificate of Graduation</option>
                                         <option value="Certificate of Grades">Certificate of Grades</option>
                                         <option value="Certificate of Enrollment">Certificate of Enrollment</option>
                                         <option value="Certificate of Good Moral Character">Certificate of Good Moral Character</option>
                                         <option value="Temporary I.D.">Temporary I.D.</option>
-                                        <option value="Certified True Copy of Document">Certified True Copy of Document</option>                   
-                        <!-- Other options... -->
-                    </select>
-                </div>
-            </div>
-            <!-- Hidden input field to store the selected document -->
-            <input type="hidden" id="selectedDocument" name="selected_document" value="">
-            <input type="submit" value="Submit">
-        </form>
-    </div>
-
-    <script>
-        $(document).ready(function() {
-            // On change event for the dropdown
-            $('#documentName').change(function() {
-                // Get the selected value
-                var selectedDocument = $(this).val();
-                // Set the selected value to the hidden input field
-                $('#selectedDocument').val(selectedDocument);
-            });
-
-            // Form submission
-            $('#documentForm').submit(function(e) {
-                e.preventDefault(); // Prevent the default form submission
-                var selectedDocument = $('#selectedDocument').val();
-                // You can perform further validation here if needed
-                if (selectedDocument !== '') {
-                    // Submit the form using AJAX or perform any necessary action
-                    // For example:
-                    $.ajax({
-                        type: 'POST',
-                        url: $(this).attr('action'),
-                        data: $(this).serialize(),
-                        success: function(response) {
-                            // Handle success response
-                            console.log('Document submitted successfully');
-                        },
-                        error: function(xhr, status, error) {
-                            // Handle error response
-                            console.error('Error:', error);
-                        }
-                    });
-                } else {
-                    alert('Please select a document type');
-                }
-            });
-        });
-    </script>
+                                        <option value="Certified True Copy of Document">Certified True Copy of Document</option>
+                                    </select>
+                                </div>
+                            </div>
                             
                              <div class="form-group row">
                                 <label class="col-12 col-sm-3 col-form-label text-sm-right">No. of Copies</label>
@@ -173,16 +126,16 @@
                                 <label class="col-12 col-sm-3 col-form-label text-sm-right">Purpose</label>
                                 <div class="col-12 col-sm-8 col-lg-6">
                                     <select class="form-control" name="purpose" required>
-                                        <option value="">Select Purpose</option>
-                                        <option value="Purpose 1">Purpose 1</option>
-                                        <option value="Purpose 2">Purpose 2</option>
-                                        <option value="Purpose 3">Purpose 3</option>
+                                    <option value="select">Select a purpose</option>
+                                        <option value="Scholarship">Scholarship</option>
+                                        <option value="To view">To view</option>
+                                        <option value="Employment">Employment</option>
                                         <!-- Add more purpose options here -->
                                     </select>
                                 </div>
                             </div>
 
-                           
+
                             <!-- (End of Purpose form) -->
 
 
@@ -224,10 +177,49 @@
 <!-- end main wrapper -->
 
 <!-- Optional JavaScript -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="../assets/vendor/jquery/jquery-3.3.1.min.js"></script>
 <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.js"></script>
 <script src="../assets/vendor/parsley/parsley.js"></script>
 <script src="../assets/libs/js/main-js.js"></script>
+<script>
+    $(document).ready(function(){
+        $('#add-request').click(function() {
+            var control_no = $('input[name=control_no]').val();
+            var studentID_no = $('input[name=studentID_no]').val();
+            var no_ofcopies = $('input[name=no_ofcopies]').val();
+            var date_request = $('input[name=date_request]').val();
+            var document_name = $('select[name=document_name]').val(); // Capture the selected document name
+            var purpose = $('select[name=purpose]').val(); // Capture the selected purpose
+            var student_id = $('input[name=student_id]').val();
+
+            var formData = {
+                'control_no': control_no,
+                'studentID_no': studentID_no,
+                'no_ofcopies': no_ofcopies,
+                'date_request': date_request,
+                'document_name': document_name,
+                'purpose': purpose, // Include the selected purpose
+                'student_id': student_id
+            };
+
+            $.ajax({
+                type: 'POST',
+                url: '../init/controllers/add_request.php',
+                data: formData,
+                success: function(response) {
+                    $('#message').html(response);
+                    window.scrollTo(0, 0);
+                },
+                error: function(response) {
+                    console.log('Failed');
+                }
+            });
+        });
+    });
+</script>
+
+
 <script type="text/javascript">
     $(document).ready(function(){
       var firstName = $('#firstName').text();

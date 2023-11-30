@@ -217,7 +217,7 @@ public function regist_process($IDNumber, $first_name, $middle_name, $last_name,
 		public function delete_payment($payment_id){
 				$sql = "DELETE FROM tbl_payment WHERE payment_id = ?";
 				 $stmt = $this->conn->prepare($sql);
-				$stmt->bind_param("i", $document_id);
+				$stmt->bind_param("i", $payment_id);
 				if($stmt->execute()){
 					$stmt->close();
 					$this->conn->close();
@@ -306,9 +306,9 @@ public function regist_process($IDNumber, $first_name, $middle_name, $last_name,
 		}
 
 
-		public function add_request($control_no, $studentID_no, $document_name, $no_ofcopies, $date_request, $received,  $student_id){
-	       $stmt = $this->conn->prepare("INSERT INTO `tbl_documentrequest` (`control_no`, `studentID_no`, `document_name`, `no_ofcopies`, `date_request`, `status`, `student_id`) VALUES(?, ?, ?, ?, ?, ?, ?)") or die($this->conn->error);
-			$stmt->bind_param("ssssssi", $control_no, $studentID_no, $document_name, $no_ofcopies, $date_request, $received, $student_id);
+		public function add_request($control_no, $studentID_no, $document_name, $no_ofcopies, $purpose, $date_request, $status,  $student_id){
+	       $stmt = $this->conn->prepare("INSERT INTO `tbl_documentrequest` (`control_no`, `studentID_no`, `document_name`, `no_ofcopies`, `purpose`	, `date_request`, `status`, `student_id`) VALUES(?, ?, ?, ?, ?, ?, ?,?)") or die($this->conn->error);
+			$stmt->bind_param("sssssssi", $control_no, $studentID_no, $document_name, $no_ofcopies, $purpose, $date_request, $status, $student_id);
 			if($stmt->execute()){
 				$stmt->close();
 				$this->conn->close();
@@ -346,7 +346,7 @@ public function regist_process($IDNumber, $first_name, $middle_name, $last_name,
 		public function delete_request($request_id){
 				$sql = "DELETE FROM tbl_documentrequest WHERE request_id = ?";
 				 $stmt = $this->conn->prepare($sql);
-				$stmt->bind_param("i", $document_id);
+				$stmt->bind_param("i", $request_id);
 				if($stmt->execute()){
 					$stmt->close();
 					$this->conn->close();
