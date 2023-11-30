@@ -68,8 +68,8 @@ You can achieve automatic status updates for "Paid" or "Pending" based on the co
                                     <?php foreach ($docrequest as $row) {
                                         // Determine if the request is paid or pending based on conditions
                                         $status = 'Pending';
-                                        if ($row['status'] === 'Received') {
-                                            $status = 'Received';
+                                        if ($row['status'] === 'Pending') {
+                                            $status = 'Pending';
                                         } elseif ($row['status'] === 'Paid' || ($row['status'] === 'Pending' && empty($row['date_releasing']))) {
                                             $status = 'Paid';
                                         }
