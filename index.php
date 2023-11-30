@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
  
 <head>
@@ -83,7 +83,11 @@
     .button1:hover {
       background-color: #d6a92b;
       color: white;
-
+    }
+    .button-container{
+        display: flex; 
+        justify-content: center;
+    }
     </style>
 
     
@@ -291,7 +295,7 @@
 
 <!-- INSTRUCTIONS -->
 <!-- Container for buttons -->
-<div class="button-container" style="display: flex; justify-content: center;">
+<div class="button-container" >
     <button class="button button1" id="instructions-button" style="background-color: #0197f6; color: black;">Instructions</button>
     <button class="button button1" id="about-us-button" style="background-color: #0197f6;">About Us</button>
     <button class="button button1" id="process-flow-button" style="background-color: #0197f6;">Document Request Process Flow</button>
