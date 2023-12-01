@@ -35,6 +35,7 @@
                 <!-- ============================================================== -->
                 <!-- end pageheader -->
                 <!-- ============================================================== -->
+                
                   <?php 
                     include '../init/model/config/connection2.php';
                     $GET_reqid = intval($_GET['request']);
@@ -44,7 +45,8 @@
                     $stmt->bind_param("is", $GET_reqid, $student_number);
                     $stmt->execute();
                     $result = $stmt->get_result();
-                    while ($row = $result->fetch_assoc()) {
+                    while ($row = $result->fetch_assoc())
+                     {
                    ?>
                     <div class="row">
                         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
@@ -67,7 +69,37 @@
                                                         <input data-parsley-type="alphanum" value="<?= $row['studentID_no']; ?>" name="studentID_no" type="text" required="" placeholder="" class="form-control">
                                                     </div>
                                                 </div>
+                                            <?php
+                                            $studentID_no = $row['studentID_no'];
+
+                                            // Perform a query to fetch Email Address based on studentID_no from tbl_student table
+                                            $query = "SELECT email_address FROM tbl_student WHERE studentID_no = ?";
+                                            $stmt = $conn->prepare($query);
+                                            $stmt->bind_param("s", $studentID_no);
+                                            $stmt->execute();
+                                            $result_email = $stmt->get_result();
+
+                                            if ($result_email->num_rows > 0) {
+                                                $email_row = $result_email->fetch_assoc();
+                                                $emailAddress = $email_row['email_address'];
+                                                echo '
                                                 <div class="form-group row">
+                                                    <label class="col-12 col-sm-3 col-form-label text-sm-right">Email Address</label>
+                                                    <div class="col-12 col-sm-8 col-lg-6">
+                                                        <input data-parsley-type="email" type="email" value="' . $emailAddress . '" name="email_address" required="" placeholder="" class="form-control">
+                                                    </div>
+                                                </div>';
+                                            } else {
+                                                echo '
+                                                <div class="form-group row">
+                                                    <label class="col-12 col-sm-3 col-form-label text-sm-right">Email Address</label>
+                                                    <div class="col-12 col-sm-8 col-lg-6">
+                                                        <input data-parsley-type="email" type="email" name="email_address" required="" placeholder="Enter Email Address" class="form-control">
+                                                    </div>
+                                                </div>';
+                                            }
+                                            ?>
+                                                 <div class="form-group row">
                                                     <label class="col-12 col-sm-3 col-form-label text-sm-right">Document Name</label>
                                                     <div class="col-12 col-sm-8 col-lg-6">
                                                         <input data-parsley-type="alphanum" value="<?= $row['document_name']; ?>" type="text" name="document_name" required="" placeholder="" class="form-control">
@@ -124,6 +156,12 @@
                                                         <button type="button" class="btn btn-space btn-primary" id="edit-request">Update</button>
                                                     </div>
                                                 </div>
+                                                  <!-- <div class="form-group row text-left">
+                                                    <div class="col col-sm-10 col-lg-9 offset-sm-1 offset-lg-7">
+                                                        <input name="request_id" value="<?= $row['request_id']; ?>" type="hidden">
+                                                        <button type="button" class="btn btn-space btn-primary" id="edit-request">Update</button>
+                                                    </div>
+                                                </div> -->
                                             </form>
                                         </div>
                                     </div>
