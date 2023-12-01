@@ -65,7 +65,7 @@
                         </label>
                     </div>
                    <div class="form-group">
-                   <button class="btn btn-lg btn-block" style="background-color:lightskyblue; !important;
+                   <button class="btn btn-lg btn-block" style="background-color:lightskyblue;" !important;
                       color: black; !important;" value="Sign in" id="btn-login" name="btn-login">Sign in</button>
                     </div>
                      <div class="form-group" id="alert-msg">
