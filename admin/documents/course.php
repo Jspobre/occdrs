@@ -45,6 +45,8 @@
                                     <div class="table-responsive">
                                         <a href="add-course.php" class="btn btn-sm" style="background-color:rgb(235, 151, 42) !important;
                                         color: rgb(243, 245, 238) !important;"><i class="fa fa-fw fa-plus"></i> Add Course</a><br><br>
+
+                                        
                                         <table class="table table-striped table-bordered first">
                                             <thead>
                                                 <tr>

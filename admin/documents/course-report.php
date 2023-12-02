@@ -48,6 +48,7 @@
                                                  <div class="chart-title">
                                                     <h4>Request Status</h4>
                                                  </div>
+                                                 <div id="tableContainer">
                                                  <table class="table table-bordered mytable">
                                                      <thead>
                                                          <tr>
@@ -94,6 +95,9 @@
                                                         </tr>
                                                     </tbody>
                                                  </table>
+                                                 <br>
+                                                      </div>
+                                                      <button class="btn btn-primary" id="downloadPdf">Download PDF</button>
                                               </div>
                                            </div>
                                         </div>
@@ -124,6 +128,7 @@
     <!-- end main wrapper -->
     <!-- ============================================================== -->
     <!-- Optional JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <script src="../assets/vendor/jquery/jquery-3.3.1.min.js"></script>
     <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.js"></script>
     <script src="../assets/vendor/custom-js/jquery.multi-select.html"></script>
@@ -168,6 +173,31 @@
 
          chart.draw(data, options);
       }
+
+
+      document.getElementById('downloadPdf').addEventListener('click', function () {
+    const element = document.getElementById('tableContainer'); // Select the container for PDF content
+    html2pdf()
+        .from(element)
+        .set({
+            margin: 10,
+            filename: 'Course report.pdf',
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { scale: 2 },
+            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+            // Add custom styles
+            style: `
+                body { font-family: Arial, sans-serif; }
+                h1 { color: #333; font-size: 24px; }
+                p { font-size: 14px; }
+                .mytable { border-collapse: collapse; width: 100%; }
+                .mytable td, .mytable th { border: 1px solid #ddd; padding: 8px; }
+                .mytable th { background-color: #f2f2f2; }
+                .mytable tr:nth-child(even) { background-color: #f9f9f9; }
+            `,
+        })
+        .save();
+});
    </script>
 
 
