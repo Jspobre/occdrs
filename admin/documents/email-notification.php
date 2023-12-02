@@ -1,16 +1,30 @@
 <?php
 
-session_start();
-include_once "connection.php";
+
+echo "<h1>Test Content</h1>";
+echo "<p>This page is being accessed directly.</p>";
+
+$host = "localhost";
+$user = "root";
+$pass = "";
+$dbname = "onlineschooldocuments_db";
+$conn = new mysqli($host, $user, $pass, $dbname);
+
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+
+
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
 
-require 'vendor/autoload.php';
+require '../../vendor/autoload.php';
 
-function sendemail_verify($email,  $name, $verify_token){
+function sendemail_verify($email,  $name){
     $mail = new PHPMailer(true);
 
     try{
@@ -18,7 +32,7 @@ function sendemail_verify($email,  $name, $verify_token){
     $mail->SMTPAuth = true;
 
     $mail->Host = "smtp.gmail.com";
-    $mail->Username = "occ-drs.system@gmail.com";
+    $mail->Username = "occdrs.system@gmail.com";
     $mail->Password = "zhrz rjzw qlmb tdjs";
 
     $mail->SMTPSecure = "tls";
@@ -30,14 +44,13 @@ function sendemail_verify($email,  $name, $verify_token){
     $mail->addAddress($email);
 
     $mail->isHTML(true);
-    $mail->Subject = "Email Verification from Our Lady of the Roses Montessori Learning Center";
+    $mail->Subject = "Oas Community College Document Request System";
 
     $email_template = "
-    <h2>You have registered with Our Lady of the Roses Montessori Learning Center</h2>
-    <h5>Verify your email address to login by clicking on the below given link</h5>
-    <br></br>
-    <a href='http://localhost/enrollment-system/verify_email.php?token=$verify_token'> Click Here </a>
-    ";
+    <h2>Your requested document is now available for pickup at the registrar's office</h2>
+    <h5>You may claim it personally or by an authorized person only.</h5>
+    <h6>Thank you for using OCCDRS!</h6>
+     ";
     // $mail->SMTPDebug = SMTP::DEBUG_SERVER; // Enable verbose debugging
     // $mail->Debugoutput = 'html'; // Display debug output as HTML
     
@@ -53,40 +66,27 @@ function sendemail_verify($email,  $name, $verify_token){
 
 if (isset($_POST['email'])) {
     $email = $_POST['email'];
-    $pwd = $_POST['pwd'];
-    $verify_token = md5(rand());
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
-
-
-    $sql_check = "SELECT email FROM user WHERE email = '$email'";
-    $result_check = mysqli_query($conn, $sql_check);
-
-    if (mysqli_num_rows($result_check) > 0) {
-        // $msg = "User already exists.";
-        $_SESSION['status'] = "<h2>Email is already existing.</h2>"; // Set the success message
-        header("location: register.php");
-        exit();
-    } else {
-
-
-        $name = 'Montessori Learning Center';
-    
-        $sql_insert = "INSERT INTO user (email, pwd, verify_token) VALUES ('$email', '$pwd', '$verify_token')";
 
         
-        if (mysqli_query($conn, $sql_insert)) {
-            
-             sendemail_verify($email, $name, $verify_token);
+  
 
-            $msg = "<h4>Registration Successful! Please verify your Email Address.</h4>";
-            header("location: success_page.php");
+
+        $name = 'Oas Community College';
+    
+        $sql_insert = "INSERT INTO tbl_notification (email_address ) VALUES ('$email')";
+
+        if (mysqli_query($conn, $sql_insert)) {
+            sendemail_verify($email, $name);
+          
+            header("Location: request.php?success=1"); // Redirect to request.php with a success parameter
+            exit(); // Make sure to exit to prevent further execution
         } else {
             $msg = "Error: " . $sql_insert . "<br>" . mysqli_error($conn);
         }
+        
     }
-}
+
 
 //hello bro hahahahaha
 ?>
+

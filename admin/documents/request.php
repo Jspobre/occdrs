@@ -38,6 +38,12 @@ You can achieve automatic status updates for "Paid" or "Pending" based on the co
         <!-- ============================================================== -->
         <!-- end pageheader -->
         <!-- ============================================================== -->
+        <?php
+if (isset($_GET['success']) && $_GET['success'] == 1) {
+    echo '<h4 style="color: green;">Notification Email Sent Successfully.</h4>';
+    // You can also include the $msg variable here if needed
+}
+?>
 
         <div class="row">
             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
