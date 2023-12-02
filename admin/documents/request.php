@@ -1,6 +1,4 @@
-You can achieve automatic status updates for "Paid" or "Pending" based on the conditions you mentioned. Here's the code with the modifications:
 
-```php
 <?php include('main_header/header.php');?>
 <!-- ============================================================== -->
 <!-- end navbar -->
