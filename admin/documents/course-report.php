@@ -174,13 +174,12 @@
          chart.draw(data, options);
       }
 
-
       document.getElementById('downloadPdf').addEventListener('click', function () {
     const element = document.getElementById('tableContainer'); // Select the container for PDF content
     html2pdf()
         .from(element)
         .set({
-            margin: 10,
+            margin: 20, // Increased margin for better space allocation
             filename: 'Course report.pdf',
             image: { type: 'jpeg', quality: 0.98 },
             html2canvas: { scale: 2 },
@@ -191,13 +190,14 @@
                 h1 { color: #333; font-size: 24px; }
                 p { font-size: 14px; }
                 .mytable { border-collapse: collapse; width: 100%; }
-                .mytable td, .mytable th { border: 1px solid #ddd; padding: 8px; }
+                .mytable td, .mytable th { border: 2px solid #ddd; padding-top: 4px; }
                 .mytable th { background-color: #f2f2f2; }
                 .mytable tr:nth-child(even) { background-color: #f9f9f9; }
             `,
         })
         .save();
 });
+
    </script>
 
 

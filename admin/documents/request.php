@@ -38,7 +38,7 @@
         <!-- ============================================================== -->
         <?php
 if (isset($_GET['success']) && $_GET['success'] == 1) {
-    echo '<h4 style="color: green;">Notification Email Sent Successfully.</h4>';
+    echo '<h4 style="color: green;">Email Notification Sent Successfully.</h4>';
     // You can also include the $msg variable here if needed
 }
 ?>
@@ -65,55 +65,76 @@ if (isset($_GET['success']) && $_GET['success'] == 1) {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php 
-                                    $conn = new class_model();
-                                    $docrequest = $conn->fetchAll_documentrequest();
-                                    ?>
-                                    <?php foreach ($docrequest as $row) {
-                                        // Determine if the request is paid or pending based on conditions
-                                        $status = 'Pending';
-                                        if ($row['status'] === 'Pending') {
-                                            $status = 'Pending';
-                                        } elseif ($row['status'] === 'Paid' || ($row['status'] === 'Pending' && empty($row['date_releasing']))) {
-                                            $status = 'Paid';
-                                        }
-                                    ?>
-                                        <tr>
-                                            <td><?= $row['control_no']; ?></td>
-                                            <td><?= $row['studentID_no']; ?></td>
-                                            <td><?= $row['document_name']; ?></td>
-                                            <td><?= $row['no_ofcopies']; ?></td>
-                                            <td><?= date("M d, Y", strtotime($row['date_request'])); ?></td>
-                                            <td>
-                                                <?php 
-                                                if ($row['date_releasing'] === "") {
-                                                    echo "";
-                                                } elseif ($row['date_releasing'] === $row['date_releasing']) {
-                                                    echo date("M d, Y", strtotime($row['date_releasing']));
-                                                }
-                                                ?>
-                                            </td>
-                                            <td><?= $row['processing_officer']; ?></td>
-                                            <td>
-                                                <?php
-                                                // Display the determined status
-                                                if ($status === "Pending") {
-                                                    echo '<span class="badge bg-info text-white">Pending</span>';
-                                                } else {
-                                                    echo '<span class="badge bg-success text-white">Paid</span>';
-                                                }
-                                                ?>
-                                            </td>
-                                            <td class="align-right">
-                                                <a href="edit-request.php?request=<?= $row['request_id']; ?>&student-number=<?php echo $row['studentID_no']; ?>" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                                                    <i class="fa fa-edit"></i>
-                                                </a> |
-                                                <a href="javascript:;" data-id="<?= $row['request_id']; ?>" class="text-secondary font-weight-bold text-xs delete" data-toggle="tooltip" data-original-title="Edit user">
-                                                    <i class="fa fa-trash-alt"></i>
-                                                </a>
-                                            </td>
-                                        </tr>
-                                    <?php } ?>
+                                <?php
+// Assuming your class_model contains the fetchAll_documentrequest() and fetchAll_studentDocument() methods
+
+$conn = new class_model();
+$docrequest = $conn->fetchAll_documentrequest();
+$studentDocuments = $conn->fetchAll_studentDocument(); // Fetch all student documents
+
+foreach ($docrequest as &$row) {
+    // Check if 'studentID_no' key exists in the current row
+    if (isset($row['student_id'])) {
+        $studentID = $row['student_id'];
+        $documentExists = false;
+
+        foreach ($studentDocuments as $doc) {
+            if (isset($doc['student_id']) && $doc['student_id'] === $studentID) {
+                $documentExists = true;
+                break;
+            }
+        }
+
+        // Determine status based on document existence
+        $status = ($documentExists) ? 'Paid' : 'Pending';
+
+        // Modify the 'status' field in the $row array
+        $row['status'] = $status;
+?>
+        <tr>
+            <td><?= $row['control_no']; ?></td>
+            <td><?= $studentID; ?></td>
+            <td><?= $row['document_name']; ?></td>
+            <td><?= $row['no_ofcopies']; ?></td>
+            <td><?= date("M d, Y", strtotime($row['date_request'])); ?></td>
+            <td>
+                <?php 
+                if ($row['date_releasing'] === "") {
+                    echo "";
+                } elseif ($row['date_releasing'] === $row['date_releasing']) {
+                    echo date("M d, Y", strtotime($row['date_releasing']));
+                }
+                ?>
+            </td>
+            <td><?= $row['processing_officer']; ?></td>
+            <td>
+                <?php
+                // Display the determined status
+                if ($status === "Pending") {
+                    echo '<span class="badge bg-info text-white">Pending</span>';
+                } else {
+                    echo '<span class="badge bg-success text-white">Paid</span>';
+                }
+                ?>
+            </td>
+            <td class="align-right">
+                <a href="edit-request.php?request=<?= $row['request_id']; ?>&student-number=<?= $row['studentID_no']; ?>" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                    <i class="fa fa-edit"></i>
+                </a> |
+                <a href="javascript:;" data-id="<?= $row['request_id']; ?>" class="text-secondary font-weight-bold text-xs delete" data-toggle="tooltip" data-original-title="Edit user">
+                    <i class="fa fa-trash-alt"></i>
+                </a>
+            </td>
+        </tr>
+<?php 
+    } else {
+        // Handle the case where 'studentID_no' key is not present in the current row
+        // You can display an error message or take appropriate action
+    }
+} // End of foreach loop
+?>
+
+
                                 </tbody>
                             </table>
                         </div>

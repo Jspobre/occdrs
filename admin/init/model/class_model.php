@@ -194,6 +194,19 @@
 
 		  }
 
+		  public function fetchAll_studentDocument(){ 
+            $sql = "SELECT * FROM  tbl_document";
+				$stmt = $this->conn->prepare($sql); 
+				$stmt->execute();
+				$result = $stmt->get_result();
+		        $data = array();
+		         while ($row = $result->fetch_assoc()) {
+		                   $data[] = $row;
+		            }
+		         return $data;
+
+		  }
+
 		public function edit_request($control_no, $studentID_no, $document_name, $no_ofcopies, $date_request, $date_releasing, $processing_officer, $status, $request_id){
 			$sql = "UPDATE `tbl_documentrequest` SET  `control_no` = ?, `studentID_no` = ?, `document_name` = ?, `no_ofcopies` = ?, `date_request` = ?, `date_releasing` = ?, `processing_officer` = ?, `status` = ?  WHERE request_id = ?";
 			 $stmt = $this->conn->prepare($sql);
@@ -389,6 +402,7 @@
 
 		  }
 		  		
+		  
 	}	
 
 	

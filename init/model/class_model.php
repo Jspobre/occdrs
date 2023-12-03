@@ -108,8 +108,8 @@ public function regist_process($IDNumber, $first_name, $middle_name, $last_name,
 		}
 
 
-		public function add_document($document_name, $document_decription, $image_size, $student_id){
-	       $stmt = $this->conn->prepare("INSERT INTO `tbl_document` (`document_name`, `document_decription`, `image_size`, `student_id`) VALUES(?, ?, ?, ?)") or die($this->conn->error);
+		public function add_document( $document_name, $document_decription, $image_size, $student_id){
+	       $stmt = $this->conn->prepare("INSERT INTO `tbl_document` ( `document_name`, `document_decription`, `image_size`, `student_id`) VALUES(?, ?, ?, ?)") or die($this->conn->error);
 			$stmt->bind_param("sssi", $document_name, $document_decription, $image_size, $student_id);
 			if($stmt->execute()){
 				$stmt->close();
