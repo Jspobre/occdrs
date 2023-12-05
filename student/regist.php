@@ -82,20 +82,21 @@
                 <label for="course">Course:</label>
                 <select id="course" name="course" required>
                     <option value="">Select Course</option>
-                    <option value="BS Computer Science">BS Computer Science</option>
-                    <option value="BS Information Technology">BS Information Technology</option>
-                    <option value="BS Information System">BS Information System</option>
+                                            <option value="Bachelor in Elementary Education - BEEd
+                        ">Bachelor in Elementary Education - BEEd
+                        </option>
+                    <!-- <option value="BS Information Technology">BS Information Technology</option> -->
+                    <option value="Bachelor of Secondary Education - BSEd (Major in English)">Bachelor of Secondary Education - BSEd (Major in English)</option>
                     <option value="BS Information Technology with Specialization in Animation">BS Information Technology with Specialization in Animation</option>
-                    <option value="BS Computer Engineering">BS Computer Engineering</option>
-                    <option value="BS Accountancy">BS Accountancy</option>                
-                    <option value="engineering">BS Entrepreneurship</option>           
-                    <option value="science">BS Computer Science</option>
-                    <option value="engineering">BS Information Technology</option>
-                    <option value="arts">BS Accountancy</option>
-                    <option value="">Select Course</option>
-                    <option value="science">BS Computer Science</option>
-                    <option value="engineering">BS Information Technology</option>
-                    <option value="arts">BS Accountancy</option>
+                    <option value="Bachelor of Secondary Education - BSEd (Major in Mathematics)">Bachelor of Secondary Education - BSEd (Major in Mathematics)
+</option>
+                    <option value="Bachelor of Secondary Education - BSEd (Major in Science)">Bachelor of Secondary Education - BSEd (Major in Science
+                    )</option>                
+                    <option value="Bachelor in Technical -Vocational Teacher Education BTVTED (Major in Electrical Technology)">Bachelor in Technical -Vocational Teacher Education BTVTED (Major in Electrical Technology)</option>           
+                    <option value="Bachelor in Technical -Vocational Teacher Education BTVTED (Major in Automotive Technology)">Bachelor in Technical -Vocational Teacher Education BTVTED (Major in Automotive Technology)</option>
+                    <option value="Bachelor in Technical -Vocational Teacher Education BTVTED (Major in Food and Service Management)">Bachelor in Technical -Vocational Teacher Education BTVTED (Major in Food and Service Management)</option>
+                    <option value="Bachelor in Technical -Vocational Teacher Education BTVTED (Major in Welding and Fabrication Technology)">Bachelor in Technical -Vocational Teacher Education BTVTED (Major in Welding and Fabrication Technology)</option>
+                    <option value="Bachelor of Science in Office Administration - BSOA">Bachelor of Science in Office Administration - BSOA</option>
                 </select>
             </div>
             <div class="col-md-6">
